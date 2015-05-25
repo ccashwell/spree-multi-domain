@@ -3,7 +3,7 @@ module Spree
     def confirm_email(order, resend = false)
       @order = order.respond_to?(:id) ? order : Spree::Order.find(order)
       subject = (resend ? "[#{Spree.t(:resend).upcase}] " : '')
-      subject += "#{Spree::Config[:site_name]} #{Spree.t('order_mailer.confirm_email.subject')} ##{@order.number}"
+      subject += "#{@order.store.name} #{Spree.t('order_mailer.confirm_email.subject')} ##{@order.number}"
       mail_params = {:to => @order.email, :subject => subject}
       if @order.store.present? && @order.store.mail_from_address.present?
         mail_params[:from] = @order.store.mail_from_address
